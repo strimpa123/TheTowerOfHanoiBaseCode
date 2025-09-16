@@ -12,15 +12,14 @@ namespace TheTowerOfHanoiBaseCode
     {
         static void Main(string[] args)
         {
+            startingPoint(3); // change the number of disk from 1-7
+        }
+       
+        static void startingPoint(int stackSize)
+        {
             Stack<int>[] towers = new Stack<int>[3];
-            int stackSize = 5;
             int[] input = { -1, -1 };
             int moveCount = 0;
-
-            startingPoint(towers, stackSize, input, moveCount);
-        }
-        static void startingPoint(Stack<int>[] towers, int stackSize, int[] input, int moveCount)
-        {
             initialtower(towers, stackSize);
             while (true)
             {
@@ -29,7 +28,7 @@ namespace TheTowerOfHanoiBaseCode
                 if (towers[0].Count == 0 && towers[1].Count == 0)
                     break;
 
-                input = userInputs(input);
+                userInputs(input, out input);
                 if (moveCheck(towers, input))
                 {
                     towers[input[1]].Push(towers[input[0]].Pop());
@@ -46,7 +45,7 @@ namespace TheTowerOfHanoiBaseCode
             for (int x = 0; x < stackSize; x++)
                 towers[0].Push(stackSize - x);
         }
-        static int[] userInputs(int[] input)
+        static void userInputs(int[] input, out int[] UI)
         {
             bool isNum = true;
             Console.WriteLine("\n");
@@ -67,9 +66,7 @@ namespace TheTowerOfHanoiBaseCode
                 if (isNum && input[0] == input[1])
                     isNum = false;
             } while (!isNum);
-
-            return input;
-
+            UI = input;
         }
         static bool moveCheck(Stack<int>[] towers, int[] input)
         {
